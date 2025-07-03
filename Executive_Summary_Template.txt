@@ -1,0 +1,17 @@
+
+Executive Summary – Predicting Car Insurance Claims
+
+Overview:
+This analysis aims to develop predictive models to identify whether a car insurance policyholder will file a claim within the next 6 months. Using simplified features, we explored the relationship between customer demographics, vehicle characteristics, and claim likelihood.
+
+Approach:
+The dataset underwent cleaning and transformation. Two models were tested:
+1. Logistic Regression – for interpretability.
+2. Decision Tree – for capturing non-linear patterns.
+
+Findings:
+- The Decision Tree model slightly outperformed Logistic Regression in terms of precision and F1-score.
+- Key predictors included age of the policyholder, car age, and number of airbags.
+
+Recommendation:
+We recommend deploying the Decision Tree model for initial pilot use. It provides actionable insights with reasonable accuracy and is easy to explain to non-technical stakeholders.
