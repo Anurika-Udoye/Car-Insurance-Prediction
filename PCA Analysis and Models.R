@@ -1,11 +1,11 @@
 # Set working directory (adjust path if necessary)
-setwd("/Users/Anurika/Desktop/AIS Casestudy/Predictive Analytics Project Pack")
-
+setwd("/Users/")
+train <- read.csv("train.csv")
 #========================
 #Principal Component Analysis
 #========================
 # ==== ENCODE BINARY COLUMNS ====
-train <- read.csv("train.csv")
+
 library(dplyr)
 
 binary_cols <- c(
@@ -20,6 +20,7 @@ binary_cols <- c(
 
 train <- train %>%
   mutate(across(all_of(binary_cols), ~ ifelse(. == "Yes", 1, 0)))
+
 
 # ==== EXTRACT TORQUE AND POWER ====
 library(dplyr)
@@ -51,7 +52,7 @@ library(dplyr)
 cols_to_scale <- c("population_density", "displacement", "cylinder", "gear_box", "turning_radius", "gross_weight", 
                    "torque_to_rpm_ratio","power_to_rpm_ratio", "airbags", "volume", "ncap_rating")
 
-# Step 1: Compute min and max from train only
+# Step 1: Compute min and max from train 
 minmax_params <- train %>%
   summarise(across(all_of(cols_to_scale), list(min = ~min(., na.rm = TRUE),
                                                max = ~max(., na.rm = TRUE))))
@@ -69,10 +70,11 @@ scale_with_minmax <- function(df, params) {
 # Step 3: Apply to train only
 train <- scale_with_minmax(train, minmax_params)
 
-
+# i created a new column called volume which is L*H*L
 # ==== DROPPING UNWANTED COLUMNS ====
 cols_to_drop <- c("policy_id", "width", "height", "length")
 train <- train %>% select(-all_of(cols_to_drop))
+
 
 # ==== ONE HOT ENCODING ====
 library(fastDummies)
@@ -82,7 +84,7 @@ library(dplyr)
 cat_columns <- c("model", "segment", "fuel_type", "engine_type",
                  "transmission_type", "steering_type", "rear_brakes_type", "make", "area_cluster")
 
-# One-hot encode only the train data set
+# One-hot encode the train data set
 train <- dummy_cols(
   train,
   select_columns = cat_columns,
